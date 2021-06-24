@@ -1,0 +1,21 @@
+en:
+  PLUGIN_PAGELOCKS:
+    EXPIRESAFTER: Locks expire after (seconds)
+    EXPIRESAFTER_HELP: Number of seconds before locks expires
+    LOCKS: Locks
+    LOCKSBYUSERS: Locks held by users
+    
+    ALERT:
+      LOCK_REMOVED: Lock has been removed successfully.
+      LOCK_NOT_REMOVED: Lock has NOT been removed.
+      ALREADY_LOCKED: |
+        %s is currently editing this page. 
+        Please try again later, or contact %s to coordinate editing of page.
+      CONFIRM_DELETE: Have you confirmed the page is no longer being edited by %s?
+      LOCK_GRANTED: Locks has been acquired successfully
+      LOCK_DENIED: Locks has NOT been granted
+      LOCK_EXPIRED: |
+        Lock on page has expired or has been removed. Refresh page to acquire new lock. 
+        Your changes will not be saved.
+      LOCK_EXTENDED: Lock has been extended
+      LOCK_COUNT: Found %s lock(s)

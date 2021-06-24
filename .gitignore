@@ -1,0 +1,6 @@
+.vscode
+.*workspace
+node_modules
+vendor/*
+!vendor/composer/*
+!vendor/autoload.php

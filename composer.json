@@ -1,0 +1,33 @@
+{
+  "name": "pamtbaau/packlocks",
+  "type": "grav-plugin",
+  "description": "Locks Grav pages when user is editing the page",
+  "keywords": ["plugin"],
+  "homepage": "https://github.com/pamtbaau/grav-plugin-pagelocks",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "pamtbaau",
+      "email": "pamtbaau@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.3.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Grav\\Plugin\\PageLocks\\": "classes/"
+    },
+    "classmap":  ["pagelocks.php"]
+  },
+  "config": {
+    "platform": {
+      "php": "7.3.6"
+    }
+  },
+  "require-dev": {
+    "vimeo/psalm": "^4.7",
+    "getgrav/grav": "^1.7"
+  }
+}

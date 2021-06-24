@@ -1,0 +1,1 @@
+{"version":3,"sourceRoot":"","sources":["../build/scss/lock-admin.scss"],"names":[],"mappings":"AAAA;EACI","file":"lock-admin.css","sourcesContent":[".fa.fa-close {\n    color: red;\n}\n"]}
