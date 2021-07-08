@@ -1,6 +1,12 @@
 # v0.1.1
 ##  08-07-2021
 
+1. [](#bugfix)
+    * vendor files added
+
+# v0.1.1
+##  08-07-2021
+
 1. [](#improved)
     * added German language support and some config settings in Admin
     * fixed some tiny details (typos, icons and the like)
