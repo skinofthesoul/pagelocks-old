@@ -92,14 +92,14 @@ class PageLocksPlugin extends Plugin
 
         // Add script for all Admin pages. Must at least check on which page user is.
         $assets->addJs("plugin://pagelocks/js/pagelocker$min.js");
-        $assets->addCss("plugin://pagelocks/css/page$min.css");
+        $assets->addCss("plugin://pagelocks/css/page.css");
 
         // Add scripts required for Admin page of PageLocks: /admin/locks
         $route = $this->grav['uri']->uri();
 
         if (preg_match('/\/admin\/locks$/', $route) === 1) {
             $assets->addJs("plugin://pagelocks/js/pagelocksadmin$min.js");
-            $assets->addCss("plugin://pagelocks/css/lock-admin$min.css");
+            $assets->addCss("plugin://pagelocks/css/lock-admin.css");
         }
     }
 
@@ -110,7 +110,7 @@ class PageLocksPlugin extends Plugin
     {
         $this->grav['twig']->plugins_hooked_nav['PLUGIN_PAGELOCKS.LOCKS'] = [
             'route' => $this->route,
-            'icon' => 'fa-file-text'
+            'icon' => 'fa-lock'
         ];
     }
 

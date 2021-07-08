@@ -63,7 +63,7 @@ class LockHandler
     /**
      * Check if request originated from front-end javascript from PageLocks.
      * 
-     * @return bool True if request is from PageLocks
+     * @return bool True if request is not from PageLocks
      */
     protected function isNotSendByPageLocks(): bool
     {
@@ -116,7 +116,7 @@ class LockHandler
     }
 
     /**
-     * Get list of locks for for PageLocks admin page.
+     * Get list of locks for PageLocks admin page.
      * 
      * @return array Response for 'readLocks' request.
      */
@@ -292,7 +292,7 @@ class LockHandler
             $lock = $locks[$route];
 
             if ($lock->email != $user->email) {
-                return $lock->fullname;
+                return $lock->email;
             }
         }
 
