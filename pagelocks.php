@@ -94,10 +94,14 @@ class PageLocksPlugin extends Plugin
         $assets->addJs("plugin://pagelocks/js/pagelocker$min.js");
         $assets->addCss("plugin://pagelocks/css/page.css");
 
-        // Add scripts required for Admin page of PageLocks: /admin/locks
+        // Add scripts required for Admin page of PageLocks:
+        // ends with $this->config['plugins']['admin']['route']/locks
         $route = $this->grav['uri']->uri();
+        $pagelocksadmin = $this->config['plugins']['admin']['route']."/locks";
 
-        if (preg_match('/\/admin\/locks$/', $route) === 1) {
+        // dump($this->config['plugins']['admin']['route']);
+        // if (preg_match('/\/admin\/locks$/', $route) === 1) {
+        if (strpos($route, $pagelocksadmin) !== false) {
             $assets->addJs("plugin://pagelocks/js/pagelocksadmin$min.js");
             $assets->addCss("plugin://pagelocks/css/lock-admin.css");
         }

@@ -7,6 +7,9 @@ en:
     KEEPALIVEINTERVAL: how often to extend a lock, in seconds
     PRODUCTIONMODE: production mode (minifies assets)
     DEBUG: debugging mode
+    TH_USER: User
+    TH_PAGE: Page
+    TH_LASTACTIVE: Last active on page
     
     ALERT:
       LOCK_REMOVED: Lock has been removed successfully.
@@ -32,6 +35,9 @@ de:
     KEEPALIVEINTERVAL: Abstand in dem eine Sperre erneuert wird (Sekunden)
     PRODUCTIONMODE: Produktionsmodus (minifiziert Javascript und CSS)
     DEBUG: Fehlersuche-Modus
+    TH_USER: Benutzer:in
+    TH_PAGE: Seite
+    TH_LASTACTIVE: Letzte Aktivität
     
     ALERT:
       LOCK_REMOVED: Seitensperre wurde erfolgreich aufgehoben.

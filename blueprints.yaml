@@ -1,7 +1,7 @@
 name: PageLocks
 slug: pagelocks
 type: plugin
-version: 0.1.2
+version: 0.1.3
 description: Set lock on page when edited in Admin by user
 icon: lock
 author:

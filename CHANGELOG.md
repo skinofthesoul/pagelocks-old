@@ -1,4 +1,12 @@
-# v0.1.1
+# v0.1.3
+##  08-07-2021
+
+1. [](#bugfix)
+    * allow for different admin route
+2. [](#improved)
+    * made headlines in admin list of pagelocks translatable
+
+# v0.1.2
 ##  08-07-2021
 
 1. [](#bugfix)
