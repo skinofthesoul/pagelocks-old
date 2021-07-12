@@ -203,7 +203,7 @@ class LockHandler
      */
     public function userIsOnPage(string $route): bool
     {
-        return preg_match('/\/pages(\/[a-z][a-z0-9\-_]+)+$/', $route) === 1;
+        return preg_match('/\/pages(\/[a-z][a-z0-9\-_]*)+$/', $route) === 1;
     }
 
     /**
