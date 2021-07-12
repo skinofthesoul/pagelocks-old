@@ -92,7 +92,7 @@ class PageLocksPlugin extends Plugin
 
         // Add script for all Admin pages. Must at least check on which page user is.
         $assets->addJs("plugin://pagelocks/js/pagelocker$min.js");
-        $assets->addCss("plugin://pagelocks/css/page.css");
+        $assets->addCss("plugin://pagelocks/css/page$min.css");
 
         // Add scripts required for Admin page of PageLocks:
         // ends with $this->config['plugins']['admin']['route']/locks
@@ -103,7 +103,7 @@ class PageLocksPlugin extends Plugin
         // if (preg_match('/\/admin\/locks$/', $route) === 1) {
         if (strpos($route, $pagelocksadmin) !== false) {
             $assets->addJs("plugin://pagelocks/js/pagelocksadmin$min.js");
-            $assets->addCss("plugin://pagelocks/css/lock-admin.css");
+            $assets->addCss("plugin://pagelocks/css/lock-admin$min.css");
         }
     }
 
