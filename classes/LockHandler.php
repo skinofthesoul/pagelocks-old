@@ -7,6 +7,7 @@ use Exception;
 use Grav\Common\Data\Data;
 use Grav\Common\Grav;
 use Grav\Common\User\DataUser\User;
+use RocketTheme\Toolbox\File\File;
 use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class LockHandler
@@ -17,6 +18,7 @@ class LockHandler
     protected Data $config;
     protected Storage $storage;
     protected bool $debug;
+    protected string $pathToLogFile;
 
     public function __construct()
     {
@@ -24,6 +26,7 @@ class LockHandler
         $this->config = $this->grav['config'];
         $this->storage = new Storage();
         $this->debug = $this->config->get('plugins.pagelocks.debug', true);
+        $this->pathToLogFile = $this->getPathToLogFile();
     }
 
     /**
@@ -347,11 +350,17 @@ class LockHandler
      */
     protected function log(string $message): void
     {
-        file_put_contents(
-            $this->getLogPath(),
-            $message,
-            FILE_APPEND
-        );
+        /** @var File */
+        $file = File::instance($this->pathToLogFile);
+        $file->lock();
+
+        $content = $file->content();
+        $now = date('c', time());
+
+        $content = "$now\t$message$content";
+        
+        $file->save($content);
+        $file->unlock();
     }
 
     /**
@@ -360,16 +369,16 @@ class LockHandler
      * @return string The path to the debug.log file
      * @throws Exception When path to log file cannot be found.
      */
-    protected function getLogPath(): string {
+    protected function getPathToLogFile(): string {
         /** @var UniformResourceLocator */
         $locator = $this->grav['locator'];
-        $logPath = $locator->findResource(self::LOGFILE, true, true);
+        $path = $locator->findResource(self::LOGFILE, true, true);
 
-        if ($logPath === false) {
+        if ($path === false) {
             throw new Exception('Path for log file cannot be found');
         }
 
-        return $logPath;
+        return $path;
     }
 
     /**
