@@ -3,6 +3,7 @@
 namespace Grav\Plugin;
 
 use Composer\Autoload\ClassLoader;
+use Exception;
 use Grav\Common\Assets;
 use Grav\Common\Plugin;
 use Grav\Plugin\PageLocks\LockHandler;
@@ -83,12 +84,12 @@ class PageLocksPlugin extends Plugin
      */
     public function onAssetsInitialized(): void
     {
-        // Should minified assets be used?
         if (!$this->config) {
-            $min = '.min';
-        } else {
-            $min = $this->config->get('plugins.pagelocks.productionMode', true) ? '.min' : '';
+            throw new Exception('Property "$this->config" should not be null.');
         }
+
+        // Should minified assets be used?
+        $min = $this->config->get('plugins.pagelocks.productionMode', true) ? '.min' : '';
 
         /** @var Assets */
         $assets = $this->grav['assets'];
@@ -100,7 +101,7 @@ class PageLocksPlugin extends Plugin
         // Add scripts required for Admin page of PageLocks:
         // ends with $this->config['plugins']['admin']['route']/locks
         $route = $this->grav['uri']->uri();
-        $pagelocksadmin = $this->config['plugins']['admin']['route']."/locks";
+        $pagelocksadmin = $this->config->get('plugins.admin.route', '/admin') . "/locks";
 
         // dump($this->config['plugins']['admin']['route']);
         // if (preg_match('/\/admin\/locks$/', $route) === 1) {
