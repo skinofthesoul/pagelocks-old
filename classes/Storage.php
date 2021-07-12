@@ -2,18 +2,22 @@
 
 namespace Grav\Plugin\PageLocks;
 
+use Exception;
+use Grav\Common\Grav;
 use Grav\Common\Yaml;
 use RocketTheme\Toolbox\File\File;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class Storage
 {
-    const LOCKFILE = USER_PATH . '/data/pagelocks/locks.yaml';
+    const LOCKFILE = 'user-data://pagelocks/locks.yaml';
 
     protected File $file;
 
     public function __construct()
     {
-        $this->file = File::instance(self::LOCKFILE);
+        $pathToLocks = $this->getPathToLocks();
+        $this->file = File::instance($pathToLocks);       
     }
 
     /**
@@ -22,7 +26,10 @@ class Storage
      */
     public function readLocks(): Locks
     {
-        return new Locks(Yaml::parse($this->file->content()));
+        $locks = new Locks(Yaml::parse($this->file->content()));
+        $this->file->free();
+
+        return $locks;
     }
 
     /**
@@ -51,5 +58,23 @@ class Storage
     public function fileReleaseLock(): void
     {
         $this->file->unlock();
+    }
+
+    /**
+     * Get the path to the lock file (/path/to/user/data/pagelocks/locks.yaml)
+     * 
+     * @return string Path to locks.yaml file
+     * @throws Exception When path to lock file cannot be found.
+     */
+    public function getPathToLocks(): string {
+        /** @var UniformResourceLocator */
+        $locator = Grav::instance()['locator'];
+        $path = $locator->findResource(self::LOCKFILE, true, true);
+
+        if ($path === false) {
+            throw new Exception('Path for lock file cannot be found');
+        }
+
+        return $path;
     }
 }
