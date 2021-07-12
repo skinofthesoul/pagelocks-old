@@ -85,7 +85,11 @@ class PageLocksPlugin extends Plugin
     public function onAssetsInitialized()
     {
         // Should minified assets be used?
+        if (!$this->config) {
+            $min = '.min';
+        } else {
         $min = $this->config->get('plugins.pagelocks.productionMode', true) ? '.min' : '';
+        }
 
         /** @var Assets */
         $assets = $this->grav['assets'];
