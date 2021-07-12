@@ -88,7 +88,7 @@ class PageLocksPlugin extends Plugin
         if (!$this->config) {
             $min = '.min';
         } else {
-        $min = $this->config->get('plugins.pagelocks.productionMode', true) ? '.min' : '';
+            $min = $this->config->get('plugins.pagelocks.productionMode', true) ? '.min' : '';
         }
 
         /** @var Assets */
