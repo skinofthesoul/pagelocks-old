@@ -82,7 +82,7 @@ class PageLocksPlugin extends Plugin
     /**
      * Add assets required for page
      */
-    public function onAssetsInitialized()
+    public function onAssetsInitialized(): void
     {
         // Should minified assets be used?
         if (!$this->config) {
@@ -114,7 +114,7 @@ class PageLocksPlugin extends Plugin
     /**
      * Add navigation item to the admin plugin
      */
-    public function onAdminMenu()
+    public function onAdminMenu(): void
     {
         $this->grav['twig']->plugins_hooked_nav['PLUGIN_PAGELOCKS.LOCKS'] = [
             'route' => $this->route,
@@ -125,7 +125,7 @@ class PageLocksPlugin extends Plugin
     /**
      * Add plugin templates path
      */
-    public function onTwigTemplatePaths()
+    public function onTwigTemplatePaths(): void
     {
         $this->grav['twig']->twig_paths[] = __DIR__ . '/admin/templates';
     }
