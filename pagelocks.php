@@ -5,7 +5,6 @@ namespace Grav\Plugin;
 use Composer\Autoload\ClassLoader;
 use Grav\Common\Assets;
 use Grav\Common\Plugin;
-use Grav\Common\User\DataUser\User;
 use Grav\Plugin\PageLocks\LockHandler;
 
 /**
@@ -128,18 +127,5 @@ class PageLocksPlugin extends Plugin
     public function onTwigTemplatePaths(): void
     {
         $this->grav['twig']->twig_paths[] = __DIR__ . '/admin/templates';
-    }
-
-    /**
-     * Check if user is logged in.
-     * 
-     * @return bool True if user is logged-in
-     */
-    private function isUserLoggedIn(): bool
-    {
-        /** @var User */
-        $user = $this->grav['user'];
-
-        return isset($user->email);
     }
 }
