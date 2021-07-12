@@ -7,9 +7,12 @@ use Exception;
 use Grav\Common\Data\Data;
 use Grav\Common\Grav;
 use Grav\Common\User\DataUser\User;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class LockHandler
 {
+    const LOGFILE = 'user-data://pagelocks/debug.log';
+
     protected Grav $grav;
     protected Data $config;
     protected Storage $storage;
@@ -345,10 +348,28 @@ class LockHandler
     protected function log(string $message): void
     {
         file_put_contents(
-            USER_PATH . '/data/pagelocks/debug.log',
+            $this->getLogPath(),
             $message,
             FILE_APPEND
         );
+    }
+
+    /**
+     * Get the path to the debug.log file.
+     * 
+     * @return string The path to the debug.log file
+     * @throws Exception When path to log file cannot be found.
+     */
+    protected function getLogPath(): string {
+        /** @var UniformResourceLocator */
+        $locator = $this->grav['locator'];
+        $logPath = $locator->findResource(self::LOGFILE, true, true);
+
+        if ($logPath === false) {
+            throw new Exception('Path for log file cannot be found');
+        }
+
+        return $logPath;
     }
 
     /**
