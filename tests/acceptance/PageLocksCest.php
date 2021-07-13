@@ -121,7 +121,7 @@ class PageLocksCest
         $I->see('Typography');
         // Check if Lock error alert is shown
         $I->seeElement('.error.alert.pagelocks');
-        $I->see('McAuthor 2 is currently editing this page.');
+        $I->see('author2@domain.com is currently editing this page.');
 
         $locks = $this->get_LOCKFILE();
 
