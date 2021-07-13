@@ -110,9 +110,9 @@ class LockHandlerTest extends \Codeception\Test\Unit
 
         $this->assertEquals(true, $response['isOnPage']);
         $this->assertEquals(false, $response['isLockGranted']);
-        $this->assertEquals('User 2', $response['byUser']);
+        $this->assertEquals('user2@domain.com', $response['byUser']);
         $this->assertEquals(60000, $response['keepAliveInterval']);
-        $this->assertEquals("User 2 is currently editing this page. \nPlease try again later, or contact User 2 to coordinate editing of page.\n", $response['alert']);
+        $this->assertEquals("user2@domain.com is currently editing this page. \nPlease try again later, or contact user2@domain.com to coordinate editing of page.\n", $response['alert']);
     }
 
     public function testAcquireLockGranted(): void
@@ -140,7 +140,7 @@ class LockHandlerTest extends \Codeception\Test\Unit
         $this->assertEquals(true, $response['isLockGranted']);
         $this->assertEquals('User 1', $response['byUser']);
         $this->assertEquals(60000, $response['keepAliveInterval']);
-        $this->assertEquals('Locks has been acquired successfully', $response['alert']);
+        $this->assertEquals('Lock has been acquired successfully', $response['alert']);
     }
 
     public function testClearExpiredLocks(): void
