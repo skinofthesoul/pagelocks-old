@@ -41,6 +41,7 @@
     "vimeo/psalm": "^4.8"
   },
   "scripts": {
+    "psalm": "psalm --show-info=true classes pagelocks.php tests/unit tests/acceptance",
     "test-all": [
       "@test-acceptance",
       "@test-unit"
