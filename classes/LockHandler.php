@@ -7,13 +7,18 @@ use Exception;
 use Grav\Common\Data\Data;
 use Grav\Common\Grav;
 use Grav\Common\User\DataUser\User;
+use RocketTheme\Toolbox\File\File;
+use RocketTheme\Toolbox\ResourceLocator\UniformResourceLocator;
 
 class LockHandler
 {
+    const LOGFILE = 'user-data://pagelocks/debug.log';
+
     protected Grav $grav;
     protected Data $config;
     protected Storage $storage;
     protected bool $debug;
+    protected string $pathToLogFile;
 
     public function __construct()
     {
@@ -21,6 +26,7 @@ class LockHandler
         $this->config = $this->grav['config'];
         $this->storage = new Storage();
         $this->debug = $this->config->get('plugins.pagelocks.debug', true);
+        $this->pathToLogFile = $this->getPathToLogFile();
     }
 
     /**
@@ -197,7 +203,7 @@ class LockHandler
      */
     public function userIsOnPage(string $route): bool
     {
-        return preg_match('/\/pages(\/[a-z\-]+)+$/', $route) === 1;
+        return preg_match('/\/pages(\/[a-z][a-z0-9\-_]*)+$/', $route) === 1;
     }
 
     /**
@@ -344,11 +350,35 @@ class LockHandler
      */
     protected function log(string $message): void
     {
-        file_put_contents(
-            USER_PATH . '/data/pagelocks/debug.log',
-            $message,
-            FILE_APPEND
-        );
+        /** @var File */
+        $file = File::instance($this->pathToLogFile);
+        $file->lock();
+
+        $content = $file->content();
+        $now = date('c', time());
+
+        $content = "$now\t$message$content";
+        
+        $file->save($content);
+        $file->unlock();
+    }
+
+    /**
+     * Get the path to the debug.log file.
+     * 
+     * @return string The path to the debug.log file
+     * @throws Exception When path to log file cannot be found.
+     */
+    protected function getPathToLogFile(): string {
+        /** @var UniformResourceLocator */
+        $locator = $this->grav['locator'];
+        $path = $locator->findResource(self::LOGFILE, true, true);
+
+        if ($path === false) {
+            throw new Exception('Path for log file cannot be found');
+        }
+
+        return $path;
     }
 
     /**

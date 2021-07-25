@@ -1,6 +1,12 @@
 .vscode
 .*workspace
 node_modules
-vendor/*
-!vendor/autoload.php
-!vendor/composer
+/tests/*
+!/tests/*.*
+!/tests/_support
+!/tests/acceptance
+!/tests/unit
+!/tests/README.md
+/vendor/*
+!/vendor/autoload.php
+!/vendor/composer/*

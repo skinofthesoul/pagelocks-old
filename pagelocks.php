@@ -3,9 +3,9 @@
 namespace Grav\Plugin;
 
 use Composer\Autoload\ClassLoader;
+use Exception;
 use Grav\Common\Assets;
 use Grav\Common\Plugin;
-use Grav\Common\User\DataUser\User;
 use Grav\Plugin\PageLocks\LockHandler;
 
 /**
@@ -82,8 +82,12 @@ class PageLocksPlugin extends Plugin
     /**
      * Add assets required for page
      */
-    public function onAssetsInitialized()
+    public function onAssetsInitialized(): void
     {
+        if (!$this->config) {
+            throw new Exception('Property "$this->config" should not be null.');
+        }
+
         // Should minified assets be used?
         $min = $this->config->get('plugins.pagelocks.productionMode', true) ? '.min' : '';
 
@@ -92,25 +96,25 @@ class PageLocksPlugin extends Plugin
 
         // Add script for all Admin pages. Must at least check on which page user is.
         $assets->addJs("plugin://pagelocks/js/pagelocker$min.js");
-        $assets->addCss("plugin://pagelocks/css/page.css");
+        $assets->addCss("plugin://pagelocks/css/page$min.css");
 
         // Add scripts required for Admin page of PageLocks:
         // ends with $this->config['plugins']['admin']['route']/locks
         $route = $this->grav['uri']->uri();
-        $pagelocksadmin = $this->config['plugins']['admin']['route']."/locks";
+        $pagelocksadmin = $this->config->get('plugins.admin.route', '/admin') . "/locks";
 
         // dump($this->config['plugins']['admin']['route']);
         // if (preg_match('/\/admin\/locks$/', $route) === 1) {
         if (strpos($route, $pagelocksadmin) !== false) {
             $assets->addJs("plugin://pagelocks/js/pagelocksadmin$min.js");
-            $assets->addCss("plugin://pagelocks/css/lock-admin.css");
+            $assets->addCss("plugin://pagelocks/css/lock-admin$min.css");
         }
     }
 
     /**
      * Add navigation item to the admin plugin
      */
-    public function onAdminMenu()
+    public function onAdminMenu(): void
     {
         $this->grav['twig']->plugins_hooked_nav['PLUGIN_PAGELOCKS.LOCKS'] = [
             'route' => $this->route,
@@ -121,21 +125,8 @@ class PageLocksPlugin extends Plugin
     /**
      * Add plugin templates path
      */
-    public function onTwigTemplatePaths()
+    public function onTwigTemplatePaths(): void
     {
         $this->grav['twig']->twig_paths[] = __DIR__ . '/admin/templates';
-    }
-
-    /**
-     * Check if user is logged in.
-     * 
-     * @return bool True if user is logged-in
-     */
-    private function isUserLoggedIn(): bool
-    {
-        /** @var User */
-        $user = $this->grav['user'];
-
-        return isset($user->email);
     }
 }
